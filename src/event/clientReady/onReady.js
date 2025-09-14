@@ -6,7 +6,7 @@ module.exports = (client, c) => {
     console.log(`${c.user.tag} is Running `);
 
     client.user.setActivity({
-        name: "The history of aircraft",
+        name: "Whatching some aircraft",
         type: ActivityType.Streaming,
         url: "https://www.youtube.com/watch?v=9xTiEx1EE1E",
     })

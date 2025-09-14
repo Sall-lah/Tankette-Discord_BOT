@@ -15,8 +15,8 @@ const commands = [
         ]
     },
     {
-        name: 'describe',
-        description: 'Describe a tank',
+        name: 'history',
+        description: 'A short history of the tank',
         options: [
             {
                 name: "tank",
@@ -25,9 +25,13 @@ const commands = [
                 choices: [
                     {
                         name: "Type 16",
-                        value: "japan_type16",
+                        value: "Type_16_maneuver_combat_vehicle",
+                    },
+                    {
+                        name: "L3/33",
+                        value: "L3/33",
                     }
-                ]
+                ],
             },
         ],
     },

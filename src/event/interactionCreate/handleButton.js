@@ -1,7 +1,7 @@
 module.exports = async (client, interaction) => {
     // Button Interaction
     // client.on('interactionCreate', async (interaction) => {
-    console.log(interaction);
+    // console.log(interaction);
 
     // If it an interaction button then run
     if (interaction.isButton()) {
@@ -11,11 +11,11 @@ module.exports = async (client, interaction) => {
         });
 
         // Get the role id
-        const role = interaction.member.roles.cache.get(interaction.customId);
+        const role = interaction.member.guild.roles.cache.get(interaction.customId);
 
         // Check if the user already had the role
         const hasRole = interaction.member.roles.cache.has(role.id);
-
+        
         // Remove Role
         if (hasRole) {
             await interaction.member.roles.remove(role);
