@@ -1,10 +1,11 @@
 const { EmbedBuilder, ActionRowBuilder, UserSelectMenuBuilder } = require('discord.js');
+const getUserStatusString = require('./gameUtils/getUserStatusString')
 
 module.exports = (async (client, interaction, player) => {
     return new Promise(async (resolve) => {
-        // note buat ikhsan: tambahin list user yang masih hidup dan udah mati past ngirim embed pertama
         const embeds = new EmbedBuilder()
-            .setDescription("What will you do");
+            .setTitle("What will the traitor do")
+            .setDescription(getUserStatusString(player));
         // Create User Select Menu
         let userMenu = new UserSelectMenuBuilder()
             .setCustomId('userSelect')

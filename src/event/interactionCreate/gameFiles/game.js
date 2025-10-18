@@ -2,8 +2,8 @@ const { EmbedBuilder } = require('discord.js');
 const traitorMove = require('./traitorMove');
 
 module.exports = async (client, interaction, playerIds) => {
+    // Get total palyer
     const totalPlayer = playerIds.length;
-
     // Pick the Saboteur(Killer) by random;
     const rollNumber = Math.floor(Math.random() * totalPlayer);
 
@@ -16,7 +16,8 @@ module.exports = async (client, interaction, playerIds) => {
         list: playerIds,
     }
 
-    // while (player.killer.length > 0 && player.crew.length > 1) {
+    // While there still exist killer and there atleast more than 2 crew member
+    // while (player.killer.length > 0 && player.crew.length > 2) {
     while(true) {
         // Send a night dialog
         const embedNight = new EmbedBuilder()
