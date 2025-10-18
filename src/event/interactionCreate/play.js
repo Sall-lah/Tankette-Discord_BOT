@@ -26,10 +26,18 @@ module.exports = async (client, interaction) => {
 
                 let playerIds = [];
 
-                await collector.on('collect', (m) => {
+                await collector.on('collect', async (m) => {
                     if(!playerIds.includes(m.user.id)){
                         playerIds.push(m.user.id);
-                        m.reply(`<@${m.user.id}> joined the game`);  
+                        m.reply(`<@${m.user.id}> joined the game`);
+                    }
+                    else {
+                        await m.deferReply({
+                            flags: 64, // <- only the user that make the interaction can see
+                        });
+                        await m.editReply({
+                            content: "You already joined the game vro"
+                        })
                     }
                 });
 

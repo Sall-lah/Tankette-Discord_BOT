@@ -11,7 +11,9 @@ module.exports = async (client, interaction, playerIds) => {
     let player = {
         killer: playerIds.filter(id => id == playerIds[rollNumber]),
         crew: playerIds.filter(id => id != playerIds[rollNumber]),
-        dead: []
+        alive: playerIds,
+        dead: [],
+        list: playerIds,
     }
 
     // while (player.killer.length > 0 && player.crew.length > 1) {
@@ -29,14 +31,15 @@ module.exports = async (client, interaction, playerIds) => {
 
         // Create and Send Result message
         let embedNightResult;
-        if(killResult.length > 0){
+        if(killResult.victimID.length > 0){
             // Change player status
-            player.crew = player.crew.filter((t) => {return t !== killResult[0].m.values[0]});
-            player.dead.push(killResult[0].m.values[0]);
+            player.crew = player.crew.filter((t) => {return t !== killResult.victimID[0]});
+            player.alive = player.crew.filter((t) => {return t !== killResult.victimID[0]});
+            player.dead.push(killResult.victimID[0]);
             
             embedNightResult = new EmbedBuilder()
             .setTitle("In the morning")
-            .setDescription(`Last night, a crew with the name of <@${killResult[0].m.values[0]}> have been killed by a traitor`);
+            .setDescription(`Last night, a crew with the name of <@${killResult.victimID[0]}> have been killed by a traitor`);
         } else {
             embedNightResult = new EmbedBuilder()
             .setTitle("In the morning")
