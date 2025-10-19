@@ -4,8 +4,8 @@ const getUserStatusString = require('./gameUtils/getUserStatusString')
 module.exports = (async (client, interaction, player) => {
     return new Promise(async (resolve) => {
         const embeds = new EmbedBuilder()
-            .setTitle("What will the traitor do")
-            .setDescription(getUserStatusString(player));
+            .setTitle("The Night Begins")
+            .setDescription("Who will the Traitor choose\n" + getUserStatusString(player) + "\nTime: 15s");
         // Create User Select Menu
         let userMenu = new UserSelectMenuBuilder()
             .setCustomId('userSelect')
@@ -100,7 +100,7 @@ module.exports = (async (client, interaction, player) => {
 
         await collector.on('end', async () => {
             const embed = new EmbedBuilder()
-                .setDescription("The voting has ended");
+                .setDescription("The night has ended");
             await interaction.channel.send({ embeds: [embed] });
             resolve(killList);
         });

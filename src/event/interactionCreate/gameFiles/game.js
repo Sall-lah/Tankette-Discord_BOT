@@ -1,5 +1,7 @@
 const { EmbedBuilder } = require('discord.js');
 const traitorMove = require('./traitorMove');
+const vote = require('./vote');
+const getHighestVote =  require('./gameUtils/findHighestVote');
 
 module.exports = async (client, interaction, playerIds) => {
     // Get total palyer
@@ -33,9 +35,10 @@ module.exports = async (client, interaction, playerIds) => {
         // Create and Send Result message
         let embedNightResult;
         if(killResult.victimID.length > 0){
-            // Change player status
+            // Removed the killed person from crew
             player.crew = player.crew.filter((t) => {return t !== killResult.victimID[0]});
-            player.alive = player.crew.filter((t) => {return t !== killResult.victimID[0]});
+            // Change the status
+            player.alive = player.alive.filter((t) => {return t !== killResult.victimID[0]});
             player.dead.push(killResult.victimID[0]);
             
             embedNightResult = new EmbedBuilder()
@@ -51,14 +54,42 @@ module.exports = async (client, interaction, playerIds) => {
         })
 
         // Create Story Embeds
-        // const embedNoon = new EmbedBuilder()
-        //     .setTitle("At Noon")
-        //     .setDescription("The Crew is planning to find the traitor");
+        const embedNoon = new EmbedBuilder()
+            .setTitle("At Noon")
+            .setDescription("The Crew is planning to find the traitor");
 
-        // await interaction.channel.send({
-        //     embeds : [embedNoon]
-        // })
+        await interaction.channel.send({
+            embeds : [embedNoon]
+        })
 
-        // const voteResult = await vote(client, interaction, player);
+        const voteResult = await vote(client, interaction, player);
+        const votedID = getHighestVote(voteResult);
+
+        if(voteResult.crewID.length != 0){
+            // Removed the killed person from crew or traitor
+            if(player.crew.includes(votedID)){
+                player.crew = player.crew.filter((t) => {return t !== votedID});  
+            }
+            else{
+                player.killer = player.killer.filter((t) => {return t !== votedID});  
+            }
+            
+
+            // Change the status
+            player.alive = player.alive.filter((t) => {return t !== votedID});
+            player.dead.push(votedID);
+
+            embedNightResult = new EmbedBuilder()
+            .setTitle("Vote Result")
+            .setDescription(`A crew with the name of <@${killResult.victimID[0]}> has been voted out`);
+        }
+        else if (voteResult.crewID.length === 0  || votedID === null){
+            embedNightResult = new EmbedBuilder()
+            .setTitle("Vote Result")
+            .setDescription("No one is voted out");
+        }
+        await interaction.channel.send({
+            embeds : [embedNightResult]
+        })
     }
 };
