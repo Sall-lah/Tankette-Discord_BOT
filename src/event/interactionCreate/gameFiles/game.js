@@ -2,6 +2,7 @@ const { EmbedBuilder } = require('discord.js');
 const traitorMove = require('./traitorMove');
 const vote = require('./vote');
 const getHighestVote =  require('./gameUtils/findHighestVote');
+const getUserTeam = require('./gameUtils/getUserTeam');
 
 module.exports = async (client, interaction, playerIds) => {
     // Get total palyer
@@ -18,13 +19,21 @@ module.exports = async (client, interaction, playerIds) => {
         list: playerIds,
     }
 
+    // A scoreboard view when the game ended
+    const team = {
+        traitor: player.killer,
+        crew: player.crew
+    }
+
     // While there still exist killer and there atleast more than 2 crew member
-    // while (player.killer.length > 0 && player.crew.length > 2) {
-    while(true) {
+    while (player.killer.length > 0 && player.crew.length > 2) {
+    // while(true) {
         // Send a night dialog
         const embedNight = new EmbedBuilder()
             .setTitle("At Night")
-            .setDescription("The Traitor is Planning to do something tonight");
+            .setDescription("The Traitor is Planning to do something tonight")
+            .setColor("Red")
+            .setTimestamp();
         await interaction.channel.send({
             embeds : [embedNight]
         })
@@ -43,11 +52,15 @@ module.exports = async (client, interaction, playerIds) => {
             
             embedNightResult = new EmbedBuilder()
             .setTitle("In the morning")
-            .setDescription(`Last night, a crew with the name of <@${killResult.victimID[0]}> have been killed by a traitor`);
+            .setDescription(`Last night, a crew with the name of <@${killResult.victimID[0]}> have been killed by a traitor`)
+            .setColor("White")
+            .setTimestamp();
         } else {
             embedNightResult = new EmbedBuilder()
             .setTitle("In the morning")
-            .setDescription("No one is dead today");
+            .setDescription("No one is dead today")
+            .setColor("White")
+            .setTimestamp();
         }
         await interaction.channel.send({
             embeds : [embedNightResult]
@@ -56,7 +69,9 @@ module.exports = async (client, interaction, playerIds) => {
         // Create Story Embeds
         const embedNoon = new EmbedBuilder()
             .setTitle("At Noon")
-            .setDescription("The Crew is planning to find the traitor");
+            .setDescription("The Crew is planning to find the traitor")
+            .setColor("Blue")
+            .setTimestamp();
 
         await interaction.channel.send({
             embeds : [embedNoon]
@@ -65,7 +80,7 @@ module.exports = async (client, interaction, playerIds) => {
         const voteResult = await vote(client, interaction, player);
         const votedID = getHighestVote(voteResult);
 
-        if(voteResult.crewID.length != 0){
+        if(voteResult.crewID.length > 0 && votedID != null){
             // Removed the killed person from crew or traitor
             if(player.crew.includes(votedID)){
                 player.crew = player.crew.filter((t) => {return t !== votedID});  
@@ -81,15 +96,39 @@ module.exports = async (client, interaction, playerIds) => {
 
             embedNightResult = new EmbedBuilder()
             .setTitle("Vote Result")
-            .setDescription(`A crew with the name of <@${killResult.victimID[0]}> has been voted out`);
+            .setDescription(`A crew with the name of <@${killResult.victimID[0]}> has been voted out`)
+            .setColor("White")
+            .setTimestamp();
         }
-        else if (voteResult.crewID.length === 0  || votedID === null){
+        else {
             embedNightResult = new EmbedBuilder()
             .setTitle("Vote Result")
-            .setDescription("No one is voted out");
+            .setDescription("No one is voted out")
+            .setColor("White")
+            .setTimestamp();
         }
         await interaction.channel.send({
             embeds : [embedNightResult]
         })
     }
+    // Get the team list string
+    const userTeamString = getUserTeam(team);
+    // Send match summary
+    if (player.killer.length > 0) {
+        embedNightResult = new EmbedBuilder()
+            .setTitle("The traitors win")
+            .setDescription(userTeamString)
+            .setColor("White")
+            .setTimestamp();
+    }
+    else {
+        embedNightResult = new EmbedBuilder()
+            .setTitle("The crew win")
+            .setDescription(userTeamString)
+            .setColor("White")
+            .setTimestamp();
+    }
+    await interaction.channel.send({
+        embeds: [embedNightResult]
+    })
 };

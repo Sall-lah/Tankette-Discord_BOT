@@ -5,7 +5,9 @@ module.exports = (async (client, interaction, player) => {
     return new Promise(async (resolve) => {
         const embeds = new EmbedBuilder()
             .setTitle("The Night Begins")
-            .setDescription("Who will the Traitor choose\n" + getUserStatusString(player) + "\nTime: 15s");
+            .setDescription("Who will the Traitor choose\n" + getUserStatusString(player) + "\nTime: 15s")
+            .setColor("Red")
+            .setTimestamp();
         // Create User Select Menu
         let userMenu = new UserSelectMenuBuilder()
             .setCustomId('userSelect')
@@ -100,7 +102,9 @@ module.exports = (async (client, interaction, player) => {
 
         await collector.on('end', async () => {
             const embed = new EmbedBuilder()
-                .setDescription("The night has ended");
+                .setDescription("The night has ended")
+                .setColor("Red")
+                .setTimestamp();
             await interaction.channel.send({ embeds: [embed] });
             resolve(killList);
         });

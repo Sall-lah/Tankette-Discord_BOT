@@ -42,7 +42,7 @@ module.exports = async (client, interaction) => {
                 });
 
                 await collector.on('end', () => {
-                    if(playerIds.length >= 1){
+                    if(playerIds.length >= 3){
                         interaction.channel.send(`The game will start soon`);
 
                         // Load Game

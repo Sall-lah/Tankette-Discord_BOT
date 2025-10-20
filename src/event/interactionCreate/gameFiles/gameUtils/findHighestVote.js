@@ -8,16 +8,16 @@ module.exports = (voteResult) => {
     };
 
     for(let id in voteResult.voteID){
-        if(voteResult[id] > highest.voteNum){
+        if(voteResult.voteID[id] > highest.voteNum){
             highest.id = id;
-            highest.voteNum = voteResult[id];
+            highest.voteNum = voteResult.voteID[id];
         }
         else if(voteResult[id] == highest.voteNum){
             countSame = 1;
         }
     }
 
-    if(countSame = 1 || voteResult.crewID.length === 0){
+    if(countSame === 1 || voteResult.crewID.length === 0){
         return null;
     }
     else{
