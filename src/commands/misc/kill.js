@@ -10,7 +10,7 @@ module.exports = {
             type: ApplicationCommandOptionType.User,
         },
     ],
-    // deleted: Boolean,
+    deleted: false,
     // devOnly: Boolean,
     // testOnly: Boolean,
     // callback: (client, interaction) => {

@@ -1,21 +1,21 @@
 const { ApplicationCommandOptionType } = require('discord.js');
 
 module.exports = {
-    name: 'tank-type',
+    name: 'shell-type',
     description: 'Explain about type of tank',
     options: [
         {
-            name: "tank",
+            name: "shell",
             description: "Choose what type of tank do you want to know",
             type: ApplicationCommandOptionType.String,
             choices: [
                 {
-                    name: "Main Battle Tank (MBT)",
-                    value: "Main_battle_tank",
+                    name: "Armour-Piercing Fin-Stabilized Discarding Sabot (APFSDS)",
+                    value: "Armour-piercing_fin-stabilized_discarding_sabot",
                 },
                 {
-                    name: "Armored Personel Carrier (APC)",
-                    value: "Armoured_personnel_carrier",
+                    name: "Armour-Piercing Discarding Sabot (APDS)",
+                    value: "Armour-piercing_discarding_sabot",
                 },
             ],
         },

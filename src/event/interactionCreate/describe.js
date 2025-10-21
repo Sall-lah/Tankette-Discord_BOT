@@ -1,5 +1,5 @@
 const { EmbedBuilder } = require('discord.js');
-const getTankData = require('../../utils/getTankData');
+const getData = require('../../utils/fetchWiki');
 
 module.exports = async (client, interaction) => {
     try {
@@ -11,9 +11,9 @@ module.exports = async (client, interaction) => {
         if (interaction.isChatInputCommand()) {
             // when /describe is runned
             if (interaction.commandName === "describe") {
-                const response = interaction.options.get('tank');
-                const tank = response.value
-                const data = await getTankData(tank);
+                console.log(interaction.options);
+                const response = interaction.options.get('tank').value;
+                const data = await getData(response);
 
                 const embed = new EmbedBuilder()
                     .setTitle(data.title)

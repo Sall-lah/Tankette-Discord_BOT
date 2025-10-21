@@ -2,11 +2,11 @@ const { ApplicationCommandOptionType } = require('discord.js');
 
 module.exports = {
     name: 'describe',
-    description: 'A short history of the tank',
+    description: 'Tells a little story about tanks',
     options: [
         {
             name: "tank",
-            description: "Describe a tank History",
+            description: "Describe a tank",
             type: ApplicationCommandOptionType.String,
             choices: [
                 {
@@ -20,7 +20,7 @@ module.exports = {
             ],
         },
     ],
-    // deleted: Boolean,
+    deleted: false,
     // devOnly: Boolean,
     // testOnly: Boolean,
     // callback: (client, interaction) => {
