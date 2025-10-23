@@ -9,7 +9,7 @@ module.exports = async (client, c) => {
         const applicationCommands = await getApplicationCommands(client, testServer)
 
         for (const localCommand of localCommands) {
-            const { name, description, options , deleted} = localCommand;
+            const { name, description, options, deleted} = localCommand;
 
             let existingCommand;
             const guildCommands = applicationCommands.cache;

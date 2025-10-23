@@ -14,7 +14,7 @@ module.exports = {
     deleted: false,
     // devOnly: Boolean,
     // testOnly: Boolean,
-    // callback: (client, interaction) => {
+    // callback: (interaction) => {
     //     interaction.reply("Kill your Self");
     // }
 }

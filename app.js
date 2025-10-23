@@ -4,7 +4,7 @@ require('dotenv').config();
 const eventHandler = require('./src/handlers/eventHandler');
 
 // Get module from discord.js
-const {Client, IntentsBitField, Partials} = require('discord.js');
+const {Client, IntentsBitField, Partials, Collection} = require('discord.js');
 
 // Setup client intents
 const client = new Client({
@@ -21,6 +21,9 @@ const client = new Client({
         Partials.Reaction // Lets you handle events for uncached reactions (important for messageReactionAdd / Remove).
     ]
 });
+
+//  Get Command Collection
+client.commands = new Collection();
 
 // Run event handler
 eventHandler(client);
