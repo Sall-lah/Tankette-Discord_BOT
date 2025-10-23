@@ -8,6 +8,7 @@ module.exports = {
             name: "user",
             description: "Pick server member to kill",
             type: ApplicationCommandOptionType.User,
+            required: true,
         },
     ],
     deleted: false,

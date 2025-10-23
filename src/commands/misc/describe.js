@@ -19,6 +19,36 @@ module.exports = {
                 },
             ],
         },
+        {
+            name: "shell",
+            description: "Describe the type of shell used by tank",
+            type: ApplicationCommandOptionType.String,
+            choices: [
+                {
+                    name: "Armour-Piercing Fin-Stabilized Discarding Sabot (APFSDS)",
+                    value: "Armour-piercing_fin-stabilized_discarding_sabot",
+                },
+                {
+                    name: "Armour-Piercing Discarding Sabot (APDS)",
+                    value: "Armour-piercing_discarding_sabot",
+                },
+            ],
+        },
+        {
+            name: "type",
+            description: "Describe the type of tank",
+            type: ApplicationCommandOptionType.String,
+            choices: [
+                {
+                    name: "Main Battle Tank (MBT)",
+                    value: "Main_battle_tank",
+                },
+                {
+                    name: "Armored Personel Carrier (APC)",
+                    value: "Armoured_personnel_carrier",
+                },
+            ],
+        },
     ],
     deleted: false,
     // devOnly: Boolean,

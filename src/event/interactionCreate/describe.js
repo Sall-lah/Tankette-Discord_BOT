@@ -11,9 +11,27 @@ module.exports = async (client, interaction) => {
         if (interaction.isChatInputCommand()) {
             // when /describe is runned
             if (interaction.commandName === "describe") {
-                console.log(interaction.options);
-                const response = interaction.options.get('tank').value;
-                const data = await getData(response);
+                const tank = interaction.options.get('tank') ?? false;
+                const type = interaction.options.get('type') ?? false;
+                const shell = interaction.options.get('shell') ?? false;
+
+                // Validate that user can only send one options
+                const check = [tank, type, shell].filter(Boolean);
+                if(check.length !== 1){
+                    interaction.reply("You need to choose only one option");
+                    return;
+                }
+
+                let data;
+                if(tank){
+                    data = await getData(tank.value);
+                }
+                else if(type){
+                    data = await getData(type.value);
+                }
+                else if(shell){
+                    data = await getData(shell.value);
+                }
 
                 const embed = new EmbedBuilder()
                     .setTitle(data.title)
@@ -45,7 +63,8 @@ module.exports = async (client, interaction) => {
         }
     }
     catch (e) {
-        interaction.reply(e);
+        interaction.reply("Something went wrong !!!");
+        console.log(e)
     }
     // })
 };
