@@ -1,4 +1,4 @@
-const vote = require("../vote");
+const vote = require("../file/vote");
 
 module.exports = (voteResult) => {
     let countSame = 0;

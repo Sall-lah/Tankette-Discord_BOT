@@ -1,8 +1,8 @@
 const { EmbedBuilder } = require('discord.js');
 const traitorMove = require('./traitorMove');
 const vote = require('./vote');
-const getHighestVote =  require('./gameUtils/findHighestVote');
-const getUserTeam = require('./gameUtils/getUserTeam');
+const getHighestVote =  require('../utils/findHighestVote');
+const getUserTeam = require('../utils/getUserTeam');
 
 module.exports = async (client, interaction, playerIds) => {
     // Get total palyer

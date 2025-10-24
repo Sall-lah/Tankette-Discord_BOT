@@ -1,5 +1,5 @@
 const { EmbedBuilder, ActionRowBuilder, UserSelectMenuBuilder } = require('discord.js');
-const getUserStatusString = require('./gameUtils/getUserStatusString')
+const getUserStatusString = require('../utils/getUserStatusString')
 
 module.exports = (async (client, interaction, player) => {
     return new Promise(async (resolve) => {

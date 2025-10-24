@@ -1,4 +1,6 @@
 const { ApplicationCommandOptionType } = require('discord.js');
+const getData = require('../../utils/fetchWiki');
+const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
     name: 'describe',
@@ -53,7 +55,50 @@ module.exports = {
     deleted: false,
     // devOnly: Boolean,
     // testOnly: Boolean,
-    callback: (interaction) => {
-        interaction.reply("Kill your Self");
+    callback: async (interaction) => {
+        try {
+            const tank = interaction.options.get('tank') ?? false;
+            const type = interaction.options.get('type') ?? false;
+            const shell = interaction.options.get('shell') ?? false;
+
+            // Validate that user can only send one options
+            const check = [tank, type, shell].filter(Boolean);
+            if (check.length !== 1) {
+                interaction.reply("You need to choose only one option");
+                return;
+            }
+
+            let data;
+            if (tank) {
+                data = await getData(tank.value);
+            }
+            else if (type) {
+                data = await getData(type.value);
+            }
+            else if (shell) {
+                data = await getData(shell.value);
+            }
+
+            const embed = new EmbedBuilder()
+                .setTitle(data.title)
+                .setThumbnail(data.thumbnail.source)
+                .setDescription(data.description)
+                .addFields(
+                    {
+                        name: "Description",
+                        value: data.extract,
+                        inline: false,
+                    },
+                )
+                .setColor("White")
+                .setTimestamp()
+                .setFooter({ text: "By Wikipedia" });
+
+            interaction.reply({ embeds: [embed] });
+        }
+        catch (e) {
+            interaction.reply("Something went wrong !!!");
+            console.log(e)
+        }
     },
 }
