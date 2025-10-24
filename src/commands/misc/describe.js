@@ -53,7 +53,7 @@ module.exports = {
     deleted: false,
     // devOnly: Boolean,
     // testOnly: Boolean,
-    // callback: (client, interaction) => {
-    //     interaction.reply("Kill your Self");
-    // }
+    callback: (interaction) => {
+        interaction.reply("Kill your Self");
+    },
 }

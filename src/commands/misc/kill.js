@@ -14,7 +14,15 @@ module.exports = {
     deleted: false,
     // devOnly: Boolean,
     // testOnly: Boolean,
-    // callback: (interaction) => {
-    //     interaction.reply("Kill your Self");
-    // }
+    callback: (interaction) => {
+        try {
+            const response = interaction.options.get('user');
+            const userID = response.value;
+
+            interaction.reply(`<@${interaction.user.id}> killed <@${userID}>`);
+        }
+        catch (e) {
+            interaction.reply(e);
+        }
+    },
 }

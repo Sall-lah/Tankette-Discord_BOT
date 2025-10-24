@@ -22,7 +22,7 @@ const client = new Client({
     ]
 });
 
-//  Get Command Collection
+// Make a collection to collect the callback that a commands have
 client.commands = new Collection();
 
 // Run event handler

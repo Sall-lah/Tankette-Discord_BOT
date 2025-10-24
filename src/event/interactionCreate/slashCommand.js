@@ -5,16 +5,13 @@ module.exports = async (client, interaction) => {
     if(!interaction.isChatInputCommand()) return;
 
     const command = client.commands.get(interaction.commandName);
-    // if(!command) return;
+    if(!command) return;
 
-    // try {
-    //     await command.callback(interaction);
-    // }
-    // catch (e) {
-    //     console.error(e);
-    //     await interaction.reply("Oops, something went wrong");
-    // }
-
-    console.log(interaction.commandName);
-    console.log(command);
+    try {
+        await command(interaction);
+    }
+    catch (e) {
+        console.error(e);
+        await interaction.reply("Oops, something went wrong");
+    }
 };
